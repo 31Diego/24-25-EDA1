@@ -38,7 +38,7 @@ class Fila {
         }
     }
 
-    public void personaSeAbandona() {
+    public void abandonarFila() {
         if (!fila.isEmpty()) {
             Persona abandonada = fila.poll();
             System.out.println(abandonada + " se ha aburrido y se ha ido.");

@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "src.Main",
+      "projectName": "24-25-EDA1_6c336b04"
+    },
+    {
+      "type": "java",
       "name": "ControlDeVersionesUI",
       "request": "launch",
       "mainClass": "reto005.ControlDeVersionesUI",
