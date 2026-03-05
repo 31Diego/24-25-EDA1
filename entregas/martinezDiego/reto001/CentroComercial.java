@@ -62,7 +62,7 @@ class Fila {
         System.out.println(p + " se ha colado ilícitamente en la fila.");
     }
 
-    public void anuncio() {
+    public void anunciar() {
         System.out.println("¡Pasen por esta caja en orden de fila!");
     }
 
