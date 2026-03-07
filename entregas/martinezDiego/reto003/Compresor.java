@@ -8,71 +8,75 @@ import java.util.Scanner;
 
 public class Compresor {
 
-    public static class CompressedResult {
-        List<String> output;
-        Map<Integer, String> dictionary;
+    public static class ResultadoCompresion {
 
-        public CompressedResult(List<String> output, Map<Integer, String> dictionary) {
-            this.output = output;
-            this.dictionary = dictionary;
+        List<String> salida;
+        Map<Integer, String> diccionario;
+
+        public ResultadoCompresion(List<String> salida, Map<Integer, String> diccionario) {
+            this.salida = salida;
+            this.diccionario = diccionario;
         }
 
         @Override
         public String toString() {
-            return "Output: " + output.toString() + "\nDictionary: " + dictionary.toString();
+            return "Salida: " + salida.toString() + "\nDiccionario: " + diccionario.toString();
         }
     }
 
-    public static CompressedResult comprime(String cadena) {
-        Map<String, Integer> diccionario = new HashMap<>();
-        int dictSize = 1;
-        List<String> salida = new ArrayList<>();
-        StringBuilder w = new StringBuilder();
+    public static ResultadoCompresion comprimir(String cadena) {
 
-        for (char c : cadena.toCharArray()) {
-            String wc = w.toString() + c;
-            if (diccionario.containsKey(wc)) {
-                w.append(c);
+        Map<String, Integer> diccionario = new HashMap<>();
+        int tamanoDiccionario = 1;
+
+        List<String> salida = new ArrayList<>();
+        StringBuilder prefijo = new StringBuilder();
+
+        for (char caracter : cadena.toCharArray()) {
+
+            String prefijoMasCaracter = prefijo.toString() + caracter;
+
+            if (diccionario.containsKey(prefijoMasCaracter)) {
+                prefijo.append(caracter);
             } else {
-                if (w.length() > 0) {
-                    int index = diccionario.getOrDefault(w.toString(), 0);
-                    salida.add("(" + index + "," + c + ")");
+
+                if (prefijo.length() > 0) {
+                    int indice = diccionario.getOrDefault(prefijo.toString(), 0);
+                    salida.add("(" + indice + "," + caracter + ")");
                 } else {
-                    salida.add("(0," + c + ")");
+                    salida.add("(0," + caracter + ")");
                 }
-                diccionario.put(wc, dictSize++);
-                w = new StringBuilder(String.valueOf(c));
+
+                diccionario.put(prefijoMasCaracter, tamanoDiccionario++);
+                prefijo = new StringBuilder(String.valueOf(caracter));
             }
         }
 
-        if (w.length() > 0) {
-            salida.add("(" + diccionario.getOrDefault(w.toString(), 0) + ",)");
+        if (prefijo.length() > 0) {
+            salida.add("(" + diccionario.getOrDefault(prefijo.toString(), 0) + ",)");
         }
 
         Map<Integer, String> diccionarioFinal = new HashMap<>();
-        for (Map.Entry<String, Integer> entry : diccionario.entrySet()) {
-            diccionarioFinal.put(entry.getValue(), entry.getKey());
+
+        for (Map.Entry<String, Integer> entrada : diccionario.entrySet()) {
+            diccionarioFinal.put(entrada.getValue(), entrada.getKey());
         }
 
-        return new CompressedResult(salida, diccionarioFinal);
+        return new ResultadoCompresion(salida, diccionarioFinal);
     }
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Introduce la cadena original para comprimir: ");
         String cadena = scanner.nextLine();
 
-        CompressedResult resultado = comprime(cadena);
+        ResultadoCompresion resultado = comprimir(cadena);
 
         System.out.println("\n--- Resultados ---");
         System.out.println("Cadena original: " + cadena);
-        System.out.println("Diccionario final: " + resultado.dictionary);
-        System.out.println("Cadena comprimida: " + resultado.output);
+        System.out.println("Diccionario final: " + resultado.diccionario);
+        System.out.println("Cadena comprimida: " + resultado.salida);
     }
 }
-
-
-
-
-
