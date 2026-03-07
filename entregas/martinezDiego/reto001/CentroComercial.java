@@ -51,11 +51,6 @@ class Fila {
         System.out.println(p + " ha recibido sus cosas de otra persona en la fila.");
     }
 
-    public void colarseLicitamente(Persona p) {
-        fila.add(p);
-        System.out.println(p + " se ha colado lícitamente en la fila.");
-    }
-
     public void colarseIlicitamente() {
         Persona p = new Persona("Persona " + random.nextInt(100));
         fila.add(p);
@@ -87,8 +82,6 @@ public class CentroComercial {
         fila.mostrarFila();
 
         fila.traerCosas(new Persona("Charlie"));
-        fila.colarseLicitamente(new Persona("Diana"));
-        fila.mostrarFila();
 
         fila.colarseIlicitamente();
         fila.mostrarFila();
